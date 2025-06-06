@@ -50,9 +50,7 @@
         android:padding="16dp"
         android:background="@drawable/question_background"
         android:layout_marginBottom="48dp"
-        android:lineSpacingMultiplier="1.2" />
-
-    <!-- New: Multiple Choice Buttons using GridLayout -->
+        android:lineSpacingMultiplier="1.2" />    <!-- New: Multiple Choice Buttons using GridLayout -->
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,5 +118,20 @@
             android:textAllCaps="false" />
 
     </GridLayout>
+
+    <!-- New Topic Button -->
+    <Button
+        android:id="@+id/new_topic_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔄 Change Topic"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:backgroundTint="#FF9800"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="24dp"
+        android:elevation="4dp"
+        android:textAllCaps="false"
+        android:layout_gravity="center" />
 
 </LinearLayout>
