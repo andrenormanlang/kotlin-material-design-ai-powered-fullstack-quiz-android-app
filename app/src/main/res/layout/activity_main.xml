@@ -26,9 +26,7 @@
         android:textSize="20sp"
         android:textColor="#2196F3"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
-
-    <!-- Question Counter -->
+        android:layout_marginBottom="8dp" />    <!-- Question Counter -->
     <TextView
         android:id="@+id/question_counter"
         android:layout_width="wrap_content"
@@ -50,74 +48,86 @@
         android:padding="16dp"
         android:background="@drawable/question_background"
         android:layout_marginBottom="48dp"
-        android:lineSpacingMultiplier="1.2" />    <!-- New: Multiple Choice Buttons using GridLayout -->
-    <GridLayout
+        android:lineSpacingMultiplier="1.2" />    <!-- Multiple Choice Buttons using LinearLayout for better text wrapping -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="2"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:alignmentMode="alignBounds"
-        android:columnOrderPreserved="false">
+        android:orientation="vertical"
+        android:layout_gravity="center">
 
         <Button
             android:id="@+id/option_button_a"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
             android:text="Option A"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:backgroundTint="#64B5F6"
             android:textColor="@android:color/white"
-            android:layout_margin="8dp"
+            android:layout_margin="6dp"
             android:elevation="4dp"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:padding="16dp"
+            android:gravity="center"
+            android:maxLines="3"
+            android:ellipsize="end" />
 
         <Button
             android:id="@+id/option_button_b"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
             android:text="Option B"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:backgroundTint="#64B5F6"
             android:textColor="@android:color/white"
-            android:layout_margin="8dp"
+            android:layout_margin="6dp"
             android:elevation="4dp"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:padding="16dp"
+            android:gravity="center"
+            android:maxLines="3"
+            android:ellipsize="end" />
 
         <Button
             android:id="@+id/option_button_c"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
             android:text="Option C"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:backgroundTint="#64B5F6"
             android:textColor="@android:color/white"
-            android:layout_margin="8dp"
+            android:layout_margin="6dp"
             android:elevation="4dp"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:padding="16dp"
+            android:gravity="center"
+            android:maxLines="3"
+            android:ellipsize="end" />
 
         <Button
             android:id="@+id/option_button_d"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
             android:text="Option D"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:backgroundTint="#64B5F6"
             android:textColor="@android:color/white"
-            android:layout_margin="8dp"
+            android:layout_margin="6dp"
             android:elevation="4dp"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:padding="16dp"
+            android:gravity="center"
+            android:maxLines="3"
+            android:ellipsize="end" />
 
-    </GridLayout>
+    </LinearLayout>
 
     <!-- New Topic Button -->
     <Button

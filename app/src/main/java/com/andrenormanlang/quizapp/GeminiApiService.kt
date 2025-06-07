@@ -51,10 +51,21 @@ class GeminiApiService {
                 val response = client.newCall(request).execute()
                 
                 Log.d(TAG, "Response code: ${response.code}")
-                  if (response.isSuccessful) {
+                if (response.isSuccessful) {
                     val responseBody = response.body?.string()
                     Log.d(TAG, "Response body length: ${responseBody?.length ?: 0}")
                     Log.d(TAG, "Response body preview: ${responseBody?.take(200)}")
+                    
+                    // Check for truncated response
+                    val jsonResponse = JSONObject(responseBody ?: "")
+                    val candidates = jsonResponse.optJSONArray("candidates")
+                    if (candidates != null && candidates.length() > 0) {
+                        val finishReason = candidates.getJSONObject(0).optString("finishReason", "")
+                        if (finishReason == "MAX_TOKENS") {
+                            Log.w(TAG, "Response was truncated due to token limit, retrying with fewer questions")
+                            return@withContext generateQuestions(topic, maxOf(count - 3, 5))
+                        }
+                    }
                     
                     if (ApiConfig.isValidResponse(responseBody)) {
                         Log.d(TAG, "Response is valid, parsing questions")
@@ -86,23 +97,24 @@ class GeminiApiService {
         return """
             Generate exactly $count multiple-choice quiz questions about $topic for frontend web development.
             
-            Return ONLY a valid JSON array in this exact format with no additional text:
+            Return ONLY a valid JSON array with NO additional text or explanations:
+            
             [
               {
-                "question": "Question text here?",
+                "question": "Clear and specific question text?",
                 "options": ["Option A", "Option B", "Option C", "Option D"],
                 "correctAnswer": 0
               }
             ]
             
             Requirements:
-            - Each question should be clear and concise
-            - All 4 options should be plausible but only one correct
-            - correctAnswer should be the index (0-3) of the correct option
-            - Focus on practical frontend development knowledge
-            - Include topics like HTML, CSS, JavaScript, React, responsive design, accessibility, performance optimization
-            - Make questions challenging but fair for intermediate developers
+            - Questions: Clear and specific, can be detailed but readable
+            - Options: Can be longer phrases (up to 80 characters) but keep readable
+            - correctAnswer: index (0-3) of correct option
+            - Topics: HTML, CSS, JavaScript, React, responsive design, accessibility, performance
+            - Make questions practical and challenging but fair for intermediate developers
             - Ensure variety in question types and difficulty
+            - NO markdown formatting, NO extra text outside JSON
         """.trimIndent()
     }
     
@@ -119,7 +131,7 @@ class GeminiApiService {
             })
             put("generationConfig", JSONObject().apply {
                 put("temperature", 0.7)
-                put("maxOutputTokens", 4000)
+                put("maxOutputTokens", 15000)
                 put("topP", 0.8)
                 put("topK", 40)
             })
@@ -198,11 +210,55 @@ class GeminiApiService {
         
         // Find the start and end of the JSON array
         val startIndex = cleaned.indexOf('[')
-        val endIndex = cleaned.lastIndexOf(']')
+        var endIndex = cleaned.lastIndexOf(']')
+        
+        // If no closing bracket found, the response was likely truncated
+        if (endIndex == -1 || endIndex <= startIndex) {
+            Log.w(TAG, "JSON appears to be truncated, attempting to recover")
+            
+            // Try to find the last complete question object
+            val lastCompleteObject = findLastCompleteJsonObject(cleaned, startIndex)
+            if (lastCompleteObject != -1) {
+                endIndex = lastCompleteObject + 1 // Include the closing brace
+                // Add closing bracket for the array
+                cleaned = cleaned.substring(startIndex, endIndex) + "]"
+                Log.d(TAG, "Recovered truncated JSON, new length: ${cleaned.length}")
+                return cleaned
+            } else {
+                throw IllegalArgumentException("Could not recover from truncated JSON response")
+            }
+        }
+        
         return if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
             cleaned.substring(startIndex, endIndex + 1)
         } else {
-            // Throw exception if we can't extract clean JSON
             throw IllegalArgumentException("Could not extract valid JSON array from AI response")
-        }    }
+        }
+    }
+    
+    private fun findLastCompleteJsonObject(content: String, startIndex: Int): Int {
+        var braceCount = 0
+        var lastCompleteIndex = -1
+        var inString = false
+        var escapeNext = false
+        
+        for (i in startIndex until content.length) {
+            val char = content[i]
+            
+            when {
+                escapeNext -> escapeNext = false
+                char == '\\' && inString -> escapeNext = true
+                char == '"' && !escapeNext -> inString = !inString
+                !inString && char == '{' -> braceCount++
+                !inString && char == '}' -> {
+                    braceCount--
+                    if (braceCount == 0) {
+                        lastCompleteIndex = i
+                    }
+                }
+            }
+        }
+        
+        return lastCompleteIndex
+    }
 }
