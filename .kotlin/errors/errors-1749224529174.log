@@ -1,5 +1,5 @@
 kotlin version: 2.0.21
-error message: org.jetbrains.kotlin.util.FileAnalysisException: Somewhere in file C:/MAMP/htdocs/mobila-applikationer/android-frontend-quiz-app/app/src/main/java/com/andrenormanlang/quizapp/ApiTestActivity.kt: java.lang.RuntimeException: java.io.IOException: The paging file is too small for this operation to complete
+error message: org.jetbrains.kotlin.util.FileAnalysisException: Somewhere in file C:/MAMP/htdocs/mobila-applikationer/android-fullstack-quiz-app/app/src/main/java/com/andrenormanlang/quizapp/ApiTestActivity.kt: java.lang.RuntimeException: java.io.IOException: The paging file is too small for this operation to complete
 	at org.jetbrains.kotlin.util.AnalysisExceptionsKt.wrapIntoFileAnalysisExceptionIfNeeded(AnalysisExceptions.kt:62)
 	at org.jetbrains.kotlin.fir.FirCliExceptionHandler.handleExceptionOnFileAnalysis(Utils.kt:249)
 	at org.jetbrains.kotlin.fir.resolve.transformers.FirSupertypeResolverTransformer.transformFile(FirSupertypesResolution.kt:883)

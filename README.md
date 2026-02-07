@@ -1,26 +1,31 @@
-# Android Frontend Quiz App with AI Integration
+# Android Fullstack Quiz App with AI Integration
 
-An Android quiz application that generates dynamic questions about frontend web development using Google Gemini AI.
+An Android quiz application that generates dynamic questions about fullstack development using Google Gemini AI.
 
 ## Features
 
 - 🤖 **AI-Powered Questions**: Dynamic question generation using Google Gemini AI
-- 📚 **Multiple Topics**: Choose from 9 different frontend development categories
+- 📚 **Multiple Topics**: Choose from 14 different fullstack development categories
 - 🎯 **Interactive Quiz**: Multiple-choice questions with immediate feedback
 - 🏆 **Score Tracking**: Keep track of your high scores
 - 🎨 **Modern UI**: Clean and intuitive user interface
 
 ## Topics Available
 
-- Frontend Web Development (General)
-- HTML & Semantic Web
-- CSS & Styling
-- JavaScript Fundamentals
-- React & Modern Frameworks
-- Web Performance & Optimization
-- Accessibility & Best Practices
-- Responsive Design & Mobile
-- Mixed Topics (AI Generated)
+- Fullstack Development (General)
+- Frontend (HTML, CSS & JavaScript)
+- Frontend Frameworks (React, Next.js & Vue)
+- Backend Development (Node.js, Express & APIs)
+- Databases (SQL, NoSQL, MongoDB & PostgreSQL)
+- REST APIs & GraphQL
+- Authentication & Security
+- DevOps & Deployment (Docker, CI/CD & Cloud)
+- System Design & Architecture
+- TypeScript & Modern JavaScript
+- Testing & QA (Unit, Integration & E2E)
+- C# & .NET (ASP.NET Core, EF Core & Blazor)
+- .NET Backend (Web API, MVC & Middleware)
+- Mixed Fullstack Topics (AI Generated)
 
 ## Setup Instructions
 

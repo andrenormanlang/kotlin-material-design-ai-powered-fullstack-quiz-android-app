@@ -3,7 +3,6 @@ package com.andrenormanlang.quizapp
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -14,9 +13,10 @@ import kotlinx.coroutines.launch
 
 // Updated Question data class for Multiple Choice
 data class Question(
-    val questionText: String,
-    val options: List<String>,
-    val correctAnswerIndex: Int // Index of the correct answer in the options list (0, 1, 2, or 3)
+        val questionText: String,
+        val options: List<String>,
+        val correctAnswerIndex:
+                Int // Index of the correct answer in the options list (0, 1, 2, or 3)
 )
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setupClickListeners()
         updateUI()
         displayHighScore()
-        
+
         // Show topic selection dialog on startup
         showTopicSelectionDialog()
     }
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        
+
         // Set up click listener for change topic button
         newTopicButton.setOnClickListener {
             if (!isLoading) {
@@ -90,37 +90,55 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showTopicSelectionDialog() {
-        val topics = arrayOf(
-            "Frontend Web Development (General)",
-            "HTML & Semantic Web",
-            "CSS & Styling",
-            "JavaScript Fundamentals",
-            "React & Modern Frameworks",
-            "Web Performance & Optimization",
-            "Accessibility & Best Practices",
-            "Responsive Design & Mobile",
-            "Generate AI Questions (Mixed Topics)"
-        )
+        val topics =
+                arrayOf(
+                        "Fullstack Development (General)",
+                        "Frontend (HTML, CSS & JavaScript)",
+                        "Frontend Frameworks (React, Next.js & Vue)",
+                        "Backend Development (Node.js, Express & APIs)",
+                        "Databases (SQL, NoSQL, MongoDB & PostgreSQL)",
+                        "REST APIs & GraphQL",
+                        "Authentication & Security",
+                        "DevOps & Deployment (Docker, CI/CD & Cloud)",
+                        "System Design & Architecture",
+                        "TypeScript & Modern JavaScript",
+                        "Testing & QA (Unit, Integration & E2E)",
+                        "C# & .NET (ASP.NET Core, EF Core & Blazor)",
+                        ".NET Backend (Web API, MVC & Middleware)",
+                        "Generate AI Questions (Mixed Fullstack Topics)"
+                )
 
         AlertDialog.Builder(this)
-            .setTitle("Choose Quiz Topic")
-            .setItems(topics) { _, which ->
-                val selectedTopic = when (which) {
-                    0 -> "Frontend Web Development"
-                    1 -> "HTML and semantic web technologies"
-                    2 -> "CSS, styling, and layout techniques"
-                    3 -> "JavaScript fundamentals and ES6+ features"
-                    4 -> "React, Vue, Angular and modern frontend frameworks"
-                    5 -> "Web performance optimization and best practices"
-                    6 -> "Web accessibility and inclusive design"
-                    7 -> "Responsive design and mobile-first development"
-                    8 -> "Frontend Web Development (mixed topics)"
-                    else -> "Frontend Web Development"
+                .setTitle("Choose Quiz Topic")
+                .setItems(topics) { _, which ->
+                    val selectedTopic =
+                            when (which) {
+                                0 -> "Fullstack Development"
+                                1 -> "Frontend Development including HTML, CSS, and JavaScript"
+                                2 -> "Frontend Frameworks including React, Next.js, and Vue.js"
+                                3 ->
+                                        "Backend Development including Node.js, Express, and server-side APIs"
+                                4 -> "Databases including SQL, NoSQL, MongoDB, and PostgreSQL"
+                                5 -> "REST APIs and GraphQL for fullstack applications"
+                                6 -> "Authentication, Authorization, and Web Security"
+                                7 ->
+                                        "DevOps, Deployment, Docker, CI/CD pipelines, and Cloud services"
+                                8 -> "System Design and Software Architecture for web applications"
+                                9 -> "TypeScript and Modern JavaScript (ES6+)"
+                                10 ->
+                                        "Software Testing including Unit, Integration, and End-to-End testing"
+                                11 ->
+                                        "C# and .NET including ASP.NET Core, Entity Framework Core, Blazor, and LINQ"
+                                12 ->
+                                        ".NET Backend Development including Web API, MVC, middleware, dependency injection, and SignalR"
+                                13 ->
+                                        "Fullstack Web Development (mixed topics across the entire stack including C# .NET)"
+                                else -> "Fullstack Development"
+                            }
+                    loadQuestionsForTopic(selectedTopic)
                 }
-                loadQuestionsForTopic(selectedTopic)
-            }
-            .setCancelable(false)
-            .show()
+                .setCancelable(false)
+                .show()
     }
 
     private fun loadQuestionsForTopic(topic: String) {
@@ -130,13 +148,13 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 questions = geminiApiService.generateQuestions(topic, 15).toMutableList()
-                
+
                 if (questions.isNotEmpty()) {
                     questions.shuffle()
                     currentQuestionIndex = 0
                     score = 0
                     questionsAnswered = 0
-                    
+
                     runOnUiThread {
                         hideLoadingState()
                         updateQuestion()
@@ -147,14 +165,18 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     runOnUiThread {
                         hideLoadingState()
-                        showError("AI generated an empty question list. Please try a different topic.")
+                        showError(
+                                "AI generated an empty question list. Please try a different topic."
+                        )
                         isLoading = false
                     }
                 }
             } catch (e: Exception) {
                 runOnUiThread {
                     hideLoadingState()
-                    showError("Failed to generate AI questions: ${e.message}\n\nPlease check your internet connection and try again.")
+                    showError(
+                            "Failed to generate AI questions: ${e.message}\n\nPlease check your internet connection and try again."
+                    )
                     isLoading = false
                 }
             }
@@ -162,7 +184,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoadingState() {
-        questionTextView.text = "🤖 Generating AI questions...\n\nPlease wait while we create personalized questions for you using Google Gemini AI."
+        questionTextView.text =
+                "🤖 Generating AI questions...\n\nPlease wait while we create personalized questions for you using Google Gemini AI."
         allOptionButtons.forEach { button ->
             button.text = "Loading..."
             button.isEnabled = false
@@ -176,7 +199,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAnswer(userAnswerIndex: Int) {
         if (questions.isEmpty() || isLoading) return
-        
+
         val currentQuestion = questions[currentQuestionIndex]
         val correctAnswerIndex = currentQuestion.correctAnswerIndex
         questionsAnswered++
@@ -188,30 +211,44 @@ class MainActivity : AppCompatActivity() {
             score += 10
             Toast.makeText(this, "Correct! +10 points", Toast.LENGTH_SHORT).show()
             // Highlight correct answer in green
-            allOptionButtons[userAnswerIndex].setBackgroundColor(resources.getColor(android.R.color.holo_green_light, null))
+            allOptionButtons[userAnswerIndex].setBackgroundColor(
+                    resources.getColor(android.R.color.holo_green_light, null)
+            )
         } else {
-            Toast.makeText(this, "Incorrect! The correct answer was: '${currentQuestion.options[correctAnswerIndex]}'", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                            this,
+                            "Incorrect! The correct answer was: '${currentQuestion.options[correctAnswerIndex]}'",
+                            Toast.LENGTH_LONG
+                    )
+                    .show()
             // Highlight wrong answer in red and correct answer in green
-            allOptionButtons[userAnswerIndex].setBackgroundColor(resources.getColor(android.R.color.holo_red_light, null))
-            allOptionButtons[correctAnswerIndex].setBackgroundColor(resources.getColor(android.R.color.holo_green_light, null))
+            allOptionButtons[userAnswerIndex].setBackgroundColor(
+                    resources.getColor(android.R.color.holo_red_light, null)
+            )
+            allOptionButtons[correctAnswerIndex].setBackgroundColor(
+                    resources.getColor(android.R.color.holo_green_light, null)
+            )
         }
 
         // Add a delay before moving to the next question
-        questionTextView.postDelayed({
-            if (questionsAnswered < questions.size) {
-                currentQuestionIndex++ // Move to the next question
-                updateQuestion()
-                updateUI()
-                setButtonsEnabled(true) // Re-enable buttons for the next question
-            } else {
-                endQuiz()
-            }
-        }, 2000) // 2 second delay to see the answer feedback
+        questionTextView.postDelayed(
+                {
+                    if (questionsAnswered < questions.size) {
+                        currentQuestionIndex++ // Move to the next question
+                        updateQuestion()
+                        updateUI()
+                        setButtonsEnabled(true) // Re-enable buttons for the next question
+                    } else {
+                        endQuiz()
+                    }
+                },
+                2000
+        ) // 2 second delay to see the answer feedback
     }
 
     private fun updateQuestion() {
         if (questions.isEmpty()) return
-        
+
         val currentQuestion = questions[currentQuestionIndex]
         questionTextView.text = currentQuestion.questionText
         allOptionButtons.forEachIndexed { index, button ->
@@ -252,41 +289,32 @@ class MainActivity : AppCompatActivity() {
             message += "High Score: $highScore"
         }
 
-        val percentage = if (questions.isNotEmpty()) {
-            (score.toFloat() / (questions.size * 10) * 100).toInt()
-        } else {
-            0
-        }
+        val percentage =
+                if (questions.isNotEmpty()) {
+                    (score.toFloat() / (questions.size * 10) * 100).toInt()
+                } else {
+                    0
+                }
         message += "\nAccuracy: $percentage%"
 
         AlertDialog.Builder(this)
-            .setTitle("Quiz Results")
-            .setMessage(message)
-            .setPositiveButton("New Topic") { _, _ ->
-                showTopicSelectionDialog()
-            }
-            .setNegativeButton("Same Topic") { _, _ ->
-                resetQuiz()
-            }
-            .setNeutralButton("Exit") { _, _ ->
-                finish()
-            }
-            .setCancelable(false)
-            .show()
+                .setTitle("Quiz Results")
+                .setMessage(message)
+                .setPositiveButton("New Topic") { _, _ -> showTopicSelectionDialog() }
+                .setNegativeButton("Same Topic") { _, _ -> resetQuiz() }
+                .setNeutralButton("Exit") { _, _ -> finish() }
+                .setCancelable(false)
+                .show()
     }
 
     private fun showError(errorMessage: String) {
         AlertDialog.Builder(this)
-            .setTitle("AI Quiz Error")
-            .setMessage(errorMessage)
-            .setPositiveButton("Try Different Topic") { _, _ ->
-                showTopicSelectionDialog()
-            }
-            .setNegativeButton("Exit") { _, _ ->
-                finish()
-            }
-            .setCancelable(false)
-            .show()
+                .setTitle("AI Quiz Error")
+                .setMessage(errorMessage)
+                .setPositiveButton("Try Different Topic") { _, _ -> showTopicSelectionDialog() }
+                .setNegativeButton("Exit") { _, _ -> finish() }
+                .setCancelable(false)
+                .show()
     }
 
     private fun resetQuiz() {

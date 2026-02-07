@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Frontend Quiz App</string> <!-- Updated App Name -->
+    <string name="app_name">Fullstack Quiz App</string> <!-- Updated App Name -->
     <string name="question_text">Loading question...</string> <!-- Default text -->
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>

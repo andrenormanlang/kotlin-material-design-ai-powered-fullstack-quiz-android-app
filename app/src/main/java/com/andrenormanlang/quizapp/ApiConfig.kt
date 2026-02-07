@@ -40,7 +40,7 @@ object ApiConfig {
     /**
      * Gets the model name to use for API requests
      */
-    fun getModelName(): String = "gemini-2.5-flash-preview-05-20"
+    fun getModelName(): String = "gemini-3-flash-preview"
     
     /**
      * Gets the base URL for API requests
