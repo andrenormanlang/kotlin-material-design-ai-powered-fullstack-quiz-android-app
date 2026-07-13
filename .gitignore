@@ -13,3 +13,24 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# IDE
+/.idea/
+
+# Android build outputs
+build/
+*.apk
+*.aab
+output-metadata.json
+
+# Signing keys — never commit these
+*.jks
+*.keystore
+
+# Misc
+*.log
+*.hprof
+.kotlin/
+
+# firebender
+/.idea/firebender/
