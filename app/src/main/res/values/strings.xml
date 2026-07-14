@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Fullstack Quiz App</string> <!-- Updated App Name -->
-    <string name="question_text">Loading question...</string> <!-- Default text -->
-    <string name="correct_toast">Correct!</string>
-    <string name="incorrect_toast">Incorrect!</string>
+    <string name="app_name">Fullstack Quiz App</string>
+    <string name="question_text">Loading question…</string>
+
+    <!-- Header / stats -->
+    <string name="topic_placeholder">Fullstack Quiz</string>
+    <string name="score_format">Score: %1$d</string>
+    <string name="high_score_format">Best: %1$d</string>
+    <string name="question_counter_format">Question %1$d of %2$d</string>
+    <string name="question_counter_empty">Ready</string>
+
+    <!-- Loading -->
+    <string name="loading_title">Creating your quiz…</string>
+    <string name="loading_subtitle">Gemini AI is writing questions about %1$s</string>
+    <string name="loading_more">Loading more questions…</string>
+
+    <!-- Answer feedback -->
+    <string name="feedback_correct">✓ Correct! +%1$d points</string>
+    <string name="feedback_wrong">✗ Correct answer: %1$s</string>
+
+    <!-- Buttons and dialogs -->
+    <string name="change_topic">Change topic</string>
+    <string name="choose_topic_title">Choose a quiz topic</string>
+    <string name="results_title">Quiz results</string>
+    <string name="results_new_high_score">🎉 New high score! 🎉</string>
+    <string name="review_summary_format">Final score: %1$d points · Best: %2$d · Accuracy: %3$d%%</string>
+    <string name="review_your_answer_correct">✓ Your answer: %1$s</string>
+    <string name="review_your_answer_wrong">✗ Your answer: %1$s</string>
+    <string name="review_correct_answer">Correct answer: %1$s</string>
+    <string name="action_new_topic">New topic</string>
+    <string name="action_same_topic">Play again</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_retry">Try again</string>
+    <string name="error_title">Couldn\'t create the quiz</string>
+    <string name="error_generation">Failed to generate questions: %1$s\n\nPlease check your internet connection and try again.</string>
 </resources>

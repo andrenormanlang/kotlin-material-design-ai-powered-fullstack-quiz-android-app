@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand -->
+    <color name="quiz_primary">#A5B4FC</color>
+    <color name="quiz_on_primary">#1E1B4B</color>
+    <color name="quiz_primary_container">#3730A3</color>
+    <color name="quiz_on_primary_container">#E0E7FF</color>
+
+    <!-- Answer feedback -->
+    <color name="quiz_correct_container">#1E4620</color>
+    <color name="quiz_on_correct">#A5D6A7</color>
+    <color name="quiz_wrong_container">#4A1F24</color>
+    <color name="quiz_on_wrong">#EF9A9A</color>
+</resources>
